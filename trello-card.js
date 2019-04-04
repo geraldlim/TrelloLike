@@ -118,7 +118,7 @@ class TrelloCard extends HTMLElement {
         font-weight: 500;
       }
       </style>
-      <div class="card" id="${card.id}" colId="${card.columnId}">
+      <div class="card" id="${card.id}" colId="${card.columnId}" draggable="true" ondragstart="drag(event)">
         <h2>${card.title}</h2>
         <p>${card.description}</p>
         <div id="control-container">

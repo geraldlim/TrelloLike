@@ -137,7 +137,7 @@ class TrelloColumn extends HTMLElement {
         padding: 0
       }
       </style>
-      <div class="column" id="${column.id}">
+      <div class="column" id="${column.id}" ondrop="drop(event)" ondragover="allowDrop(event)">
         <div class="column-header"> 
           <h2>${column.title}</h2>
           <span id="options" class="controls"></span>
