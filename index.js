@@ -10,8 +10,22 @@ window.addEventListener('load', () => {
 async function initData(){
   const addColumn = document.getElementById('addColumn')
   addColumn.addEventListener('click', _addColumn.bind(this));
+  const searchCard = document.getElementById('searchCard')
+  searchCard.addEventListener('keyup', _search.bind(this))
   await getColumns();
   await getCards();
+}
+
+async function _search(){
+  const searchText = document.getElementById('searchCard').value
+  const trelloBoard = document.querySelector('trello-board');
+  for(var i = 0; i < trelloBoard.children.length; i++){
+    const cardList = trelloBoard.children[i].shadowRoot.querySelector(".cards")
+    while (cardList.firstChild) {
+      cardList.removeChild(cardList.firstChild);
+    }
+  }
+  await getCards(searchText)
 }
 
 async function _addColumn(){
@@ -52,8 +66,12 @@ async function getColumns() {
 
 }
 
-async function getCards() {
-  const cards = await getAllCards();
+async function getCards(searchText=null) {
+  var cards = await getAllCards();
+  if(searchText){
+    searchText = searchText.toUpperCase()
+    cards = cards.filter(eachCard => eachCard.title.toUpperCase().includes(searchText) || eachCard.description.toUpperCase().includes(searchText))  
+  }
 
   cards.forEach(card => {
     const $column = document.getElementById(card.columnId)
