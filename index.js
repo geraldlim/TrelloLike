@@ -1,6 +1,5 @@
 import './trello-column.js';
 import './trello-card.js';
-
 import { getAllColumns, getAllCards, addColumn, editCard } from './service.js'
 
 window.addEventListener('load', () => {
@@ -19,6 +18,7 @@ async function initData(){
 async function _search(){
   const searchText = document.getElementById('searchCard').value
   const trelloBoard = document.querySelector('trello-board');
+  //Loop all columns and empty cardList
   for(var i = 0; i < trelloBoard.children.length; i++){
     const cardList = trelloBoard.children[i].shadowRoot.querySelector(".cards")
     while (cardList.firstChild) {
@@ -35,6 +35,7 @@ async function _addColumn(){
       const column = {
         "title": newColumnName,
       }
+      
       const columns = await getAllColumns();
       const exists = columns.filter(eachColumn => eachColumn.title == newColumnName) 
       if(exists.length > 0){
@@ -53,7 +54,6 @@ async function _addColumn(){
 }
 
 async function getColumns() {
-
   const trelloBoard = document.querySelector('trello-board');
   const columns = await getAllColumns();
 
