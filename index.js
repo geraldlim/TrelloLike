@@ -21,14 +21,20 @@ async function _addColumn(){
       const column = {
         "title": newColumnName,
       }
-      const result = await addColumn(column);
-      if(result){
-        const el = document.createElement('trello-column');
-        el.id = result.id;
-        column.id = el.id;
-        el.column = column;
-        trelloBoard.appendChild(el);
-      }   
+      const columns = await getAllColumns();
+      const exists = columns.filter(eachColumn => eachColumn.title == newColumnName) 
+      if(exists.length > 0){
+        alert("Oh no! Column title already exists");
+      }else{
+        const result = await addColumn(column);
+        if(result){
+          const el = document.createElement('trello-column');
+          el.id = result.id;
+          column.id = el.id;
+          el.column = column;
+          trelloBoard.appendChild(el);
+        }   
+      }
     }
 }
 

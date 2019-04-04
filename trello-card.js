@@ -1,4 +1,4 @@
-import { editCard, deleteCard} from './service.js'
+import { getAllCards, editCard, deleteCard} from './service.js'
 
 class TrelloCard extends HTMLElement {
 
@@ -37,10 +37,16 @@ class TrelloCard extends HTMLElement {
         "description": newCardDesc,
         "columnId": parseInt(this.$card.getAttribute("colId"))
       }
-      const result = await editCard(card);
-      if(result){
-        header.textContent = newCardName;
-        desc.textContent = newCardDesc;
+      const cards = await getAllCards();
+      const exists = cards.filter(eachCard => eachCard.title == newCardName) 
+      if(exists.length > 0){
+        alert("Oh no! Card title already exists");
+      }else{
+        const result = await editCard(card);
+        if(result){
+          header.textContent = newCardName;
+          desc.textContent = newCardDesc;
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-import { addCard, editColumn, deleteColumn } from './service.js'
+import { getAllColumns, getAllCards, addCard, editColumn, deleteColumn } from './service.js'
 
 class TrelloColumn extends HTMLElement {
 
@@ -38,12 +38,18 @@ class TrelloColumn extends HTMLElement {
         "description": newCardDesc,
         "columnId": parseInt(this.$columnId)
       }
-      const result = await addCard(card)
-      if(result){
-        card.id = result.id
-        const el = document.createElement('trello-card');
-        el.card = card;
-        cardList.appendChild(el);
+      const cards = await getAllCards();
+      const exists = cards.filter(eachCard => eachCard.title == newCardName) 
+      if(exists.length > 0){
+        alert("Oh no! Card title already exists");
+      }else{
+        const result = await addCard(card)
+        if(result){
+          card.id = result.id
+          const el = document.createElement('trello-card');
+          el.card = card;
+          cardList.appendChild(el);
+        }
       }
     }
   }
@@ -56,9 +62,15 @@ class TrelloColumn extends HTMLElement {
         "id": parseInt(this.$columnId),
         "title": newHeader,
       }
-      const result = await editColumn(column)
-      if(result){
-         header.textContent = newHeader;
+      const columns = await getAllColumns();
+      const exists = columns.filter(eachColumn => eachColumn.title == newHeader) 
+      if(exists.length > 0){
+        alert("Oh no! Column title already exists");
+      }else{
+        const result = await editColumn(column)
+        if(result){
+          header.textContent = newHeader;
+        }
       }
     }
   }
