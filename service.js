@@ -36,3 +36,11 @@ export function getAllCards(){
 	    headers: {'Content-Type': 'application/json'}
 	}).then(response => response.json())
 }
+
+export function addCard(card){
+	return fetch(apiUrl+'cards', {
+	    method: 'POST',
+	    headers: {'Content-Type': 'application/json'},
+	    body: JSON.stringify(card)
+	}).then(response => response.json())
+}

@@ -1,4 +1,4 @@
-import { editColumn, deleteColumn } from './service.js'
+import { addCard, editColumn, deleteColumn } from './service.js'
 
 class TrelloColumn extends HTMLElement {
 
@@ -13,16 +13,39 @@ class TrelloColumn extends HTMLElement {
     this.$optionBtn = this.shadowRoot.getElementById('options');
     this.$optionBtn.addEventListener('click', this._showOptions.bind(this));
 
-    this.$deleteColBtn = this.shadowRoot.getElementById('deleteColumn');
-    this.$deleteColBtn.addEventListener('click', this._deleteColumn.bind(this));
+    this.$addCardBtn = this.shadowRoot.getElementById('addCard');
+    this.$addCardBtn.addEventListener('click', this._addCard.bind(this));
 
     this.$editColBtn = this.shadowRoot.getElementById('editColumn');
     this.$editColBtn.addEventListener('click', this._editColumn.bind(this));
+
+    this.$deleteColBtn = this.shadowRoot.getElementById('deleteColumn');
+    this.$deleteColBtn.addEventListener('click', this._deleteColumn.bind(this));
   }
 
   _showOptions() {
     const colOptions = this.shadowRoot.getElementById('control-container')
     colOptions.className ? colOptions.removeAttribute('class') : colOptions.setAttribute('class','show')
+  }
+
+  async _addCard() {
+    const cardList = this.shadowRoot.querySelector(".cards"); 
+    const newCardName = prompt("Please enter card name:");
+    if (newCardName != null && newCardName != "") {
+      const newCardDesc = prompt("Please enter card description:");
+      const card = {
+        "title": newCardName,
+        "description": newCardDesc,
+        "columnId": parseInt(this.$columnId)
+      }
+      const result = await addCard(card)
+      if(result){
+        card.id = result.id
+        const el = document.createElement('trello-card');
+        el.card = card;
+        cardList.appendChild(el);
+      }
+    }
   }
 
   async _editColumn() {
@@ -75,7 +98,12 @@ class TrelloColumn extends HTMLElement {
         height: 2em;
         padding: 0;
       }
-       #deleteColumn {
+      #addCard {
+        background: url(materials/icons/new.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      #deleteColumn {
         background: url(materials/icons/delete.png);
         background-repeat: no-repeat;
         background-size: contain;
@@ -115,6 +143,7 @@ class TrelloColumn extends HTMLElement {
           <span id="options" class="controls"></span>
         </div>
         <div id="control-container">
+          <span id="addCard" class="controls">Add Card</span>
           <span id="editColumn" class="controls">Edit Column</span>
           <span id="deleteColumn" class="controls">Remove Column</span>
         </div>
