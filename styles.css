@@ -19,6 +19,13 @@ header h1 {
   color: white;
 }
 
+header span{
+  cursor: pointer;
+  color:white;
+  font-size: 1em;
+  font-weight: 500;
+}
+
 trello-board {
   display: grid;
   grid-gap: 30px;

@@ -7,6 +7,14 @@ export function getAllColumns(){
 	}).then(response => response.json())
 }
 
+export function addColumn(column){
+	return fetch(apiUrl+'columns', {
+	    method: 'POST',
+	    headers: {'Content-Type': 'application/json'},
+	    body: JSON.stringify(column)
+	}).then(response => response.json())
+}
+
 export function getAllCards(){
 	return fetch(apiUrl+'cards', {
 	    method: 'GET',
