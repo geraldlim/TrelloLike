@@ -44,3 +44,18 @@ export function addCard(card){
 	    body: JSON.stringify(card)
 	}).then(response => response.json())
 }
+
+export function editCard(card){
+	return fetch(apiUrl+'cards/'+card.id, {
+	    method: 'PUT',
+	    body: JSON.stringify(card),
+	    headers: {'Content-Type': 'application/json'},
+	}).then(response => response.json())
+}
+
+export function deleteCard(cardId){
+	return fetch(apiUrl+'cards/'+cardId, {
+	    method: 'DELETE',
+	    headers: {'Content-Type': 'application/json'},
+	}).then(response => response.json())
+}

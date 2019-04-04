@@ -45,10 +45,16 @@
       "description": "Suspendisse posuere ipsum at dui lacinia, ut faucibus lectus mollis."
     },
     {
-      "title": "New Card",
-      "description": "Description for new card goes here",
-      "columnId": 3,
-      "id": 6
+      "id": 6,
+      "title": "Edited Card",
+      "description": "",
+      "columnId": 3
+    },
+    {
+      "id": 7,
+      "title": "Card with Desc",
+      "description": "This card has a description!",
+      "columnId": 3
     }
   ]
 }
