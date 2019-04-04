@@ -15,6 +15,21 @@ export function addColumn(column){
 	}).then(response => response.json())
 }
 
+export function editColumn(column){
+	return fetch(apiUrl+'columns/'+column.id, {
+	    method: 'PUT',
+	    body: JSON.stringify(column),
+	    headers: {'Content-Type': 'application/json'},
+	}).then(response => response.json())
+}
+
+export function deleteColumn(columnId){
+	return fetch(apiUrl+'columns/'+columnId, {
+	    method: 'DELETE',
+	    headers: {'Content-Type': 'application/json'},
+	}).then(response => response.json())
+}
+
 export function getAllCards(){
 	return fetch(apiUrl+'cards', {
 	    method: 'GET',
