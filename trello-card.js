@@ -39,7 +39,7 @@ class TrelloCard extends HTMLElement {
       }
       const cards = await getAllCards();
       const exists = cards.filter(eachCard => eachCard.title == newCardName) 
-      if(exists.length > 0){
+      if(exists.length > 0 && exists[0].id != card.id){
         alert("Oh no! Card title already exists");
       }else{
         const result = await editCard(card);
